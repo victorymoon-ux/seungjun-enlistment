@@ -1,0 +1,6 @@
+index.backup-*.html
+claude-handoff.zip
+_mframe*.html
+_ovf.html
+_chk.html
+.DS_Store

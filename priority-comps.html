@@ -1,0 +1,82 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>우선순위 시각화 시안 3종</title>
+<style>
+:root{--ink:#182c43;--muted:#586878;--line:#dce3e9;--soft:#edf3f8;--blue:#274c71;--gold:#866329;--green:#285b4b;--green-bg:#edf5f0;--red:#8a3b3b;--red-bg:#fbeeee;--radius:12px}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:16px;line-height:1.6;word-break:keep-all}
+.wrap{max-width:900px;margin:auto;padding:28px 20px 80px}h1{font-size:22px;margin:0 0 6px;letter-spacing:-.03em}.lead{color:var(--muted);font-size:14px;margin:0 0 20px}
+.comp-label{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:44px 0 12px}.comp-label b{font-size:18px}.comp-label span{font-size:13px;color:var(--muted)}
+.stars{color:var(--gold);font-size:13px;letter-spacing:.5px}.chip{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:#fff}
+.chip.gold{background:#fff;color:var(--gold);border-color:#d7b36b}.chip.navy{background:var(--soft);color:var(--blue);border-color:#c9d8e6}.chip.g{background:var(--green-bg);color:var(--green);border-color:#bfd8c9}.chip.r{background:var(--red-bg);color:var(--red);border-color:#edd3d3}
+/* A: ladder */
+.ladder{list-style:none;margin:0;padding:0;position:relative}
+.ladder li{display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:stretch;position:relative}
+.ladder .rk{display:flex;flex-direction:column;align-items:center}.ladder .num{width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;font-size:17px;flex:0 0 auto}
+.ladder .num.top{background:var(--gold)}.ladder .num.alt{background:#8a8f99;font-size:13px}
+.ladder .line{flex:1;width:2px;background:var(--line);margin:4px 0}
+.ladder .card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:18px;background:#fff;display:grid;grid-template-columns:1fr auto;gap:8px 16px}
+.ladder .card.top{border-color:#d7b36b;box-shadow:0 0 0 2px #f3e8cf}
+.ladder .name{font-size:18px;font-weight:750;letter-spacing:-.02em}.ladder .why{font-size:13.5px;color:#2b3b4d;margin-top:4px}.ladder .cond{margin-top:8px;display:flex;flex-wrap:wrap;gap:4px}
+.ladder .side{text-align:right;min-width:72px}.ladder .mo{font-size:24px;font-weight:800;line-height:1}.ladder .mo small{font-size:12px;font-weight:600}.ladder .side .chip{margin-top:6px}
+.ladder .fall{position:absolute;left:22px;bottom:-4px;transform:translateX(-50%);background:#fff;border:1px solid var(--line);border-radius:999px;font-size:11px;font-weight:700;color:var(--red);padding:1px 8px;z-index:1;white-space:nowrap}
+.ladder .alts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.ladder .alts .card{margin:0;display:block;padding:12px}.ladder .alts .name{font-size:15px}
+/* B: scoreboard */
+.board{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.board .row{display:grid;grid-template-columns:44px 1.5fr 1.1fr 1.2fr 1fr .8fr;gap:10px;align-items:center;padding:12px 14px;border-top:1px solid var(--line);font-size:13.5px}
+.board .row:first-child{border-top:0;background:#f7f9fb;font-size:12px;color:var(--muted);font-weight:700}
+.board .row.top{background:#fffdf7}
+.board .n{width:30px;height:30px;border-radius:8px;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800}.board .n.top{background:var(--gold)}.board .n.alt{background:#8a8f99;font-size:12px}
+.board .nm{font-weight:750;font-size:15px}.board .nm small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.bar{height:10px;border-radius:5px;background:#eef2f5;position:relative;overflow:hidden}.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:5px;background:var(--blue)}.bar.en i{background:var(--gold)}
+.lbl{font-size:11.5px;color:var(--muted);margin-top:3px}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px}.pill.ok{background:var(--green-bg);color:var(--green)}.pill.no{background:var(--red-bg);color:var(--red)}.pill.m{background:#f3f4f6;color:#4a525c}
+/* C: tree */
+.tree{display:grid;gap:14px}
+.node{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff}
+.node.top{border-color:#d7b36b;box-shadow:0 0 0 2px #f3e8cf}
+.node .h{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.node .nm{font-size:17px;font-weight:750}.node .mo{font-weight:800}
+.node .c{font-size:13px;color:#2b3b4d;margin-top:4px}
+.branch{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.arrow{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;margin:-4px 0 0 18px}.arrow.win{color:var(--green)}.arrow.lose{color:var(--red)}.arrow::before{content:"";width:2px;height:18px;background:var(--line);margin-right:6px}
+.end{border-radius:10px;padding:12px 14px;font-size:14px;font-weight:700;background:var(--green-bg);color:var(--green);border:1px solid #bfd8c9;display:flex;align-items:center;justify-content:center}
+.alts3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.alts3 .node{padding:10px 12px}.alts3 .nm{font-size:14px}
+@media(max-width:640px){.ladder .alts,.alts3{grid-template-columns:1fr}.board .row{grid-template-columns:36px 1fr 1fr;grid-auto-rows:auto}.board .row>:nth-child(n+4){grid-column:2/-1}.board .row:first-child>:nth-child(n+4){display:none}.branch{grid-template-columns:1fr}.ladder .card{grid-template-columns:1fr}.ladder .side{text-align:left}}
+</style></head><body><main class="wrap">
+<h1>우선순위 섹션 시각화 시안 3종</h1><p class="lead">"카투사가 안 되면 다음으로 넘어간다"가 한눈에 보이도록 세 방식으로 그렸습니다. 카드 안 상세(조건·장점·유의점)는 지금처럼 펼쳐서 보는 구조 그대로입니다.</p>
+
+<div class="comp-label"><b>시안 A · 사다리 흐름</b><span>위에서 아래로, 탈락 화살표로 이어지는 순서</span></div>
+<ol class="ladder">
+ <li><div class="rk"><div class="num top">1</div><div class="line"></div></div><div class="card top"><div><div class="stars">★★★★★</div><div class="name">카투사</div><div class="why">영어를 쓰는 미군 부대 환경. 가장 먼저 도전</div><div class="cond"><span class="chip gold">토익 780 / OPIc IM2</span><span class="chip">전산 추첨</span><span class="chip r">평생 1회</span></div></div><div class="side"><div class="mo">18<small>개월</small></div><span class="chip">7월 접수</span></div></div><span class="fall">탈락하면 ↓</span></li>
+ <li><div class="rk"><div class="num">2</div><div class="line"></div></div><div class="card"><div><div class="stars">★★★★☆</div><div class="name">육군 영어어학병</div><div class="why">전공과 통번역 경험 연결. 카투사 탈락 직후 9월 말 접수</div><div class="cond"><span class="chip navy">토익 900 / OPIc IH</span><span class="chip">번역·통역 시험</span><span class="chip g">재지원 가능</span></div></div><div class="side"><div class="mo">18<small>개월</small></div><span class="chip">연 3회</span></div></div><span class="fall">탈락하면 ↓</span></li>
+ <li><div class="rk"><div class="num">3</div><div class="line"></div></div><div class="card"><div><div class="stars">★★★☆☆</div><div class="name">공군 영어어학병</div><div class="why">영어를 살리되 생활은 공군. 모집이 맞으면 도전</div><div class="cond"><span class="chip navy">토익 900 / OPIc IH</span><span class="chip">필기 60 + 구술 15</span><span class="chip g">재지원 가능</span></div></div><div class="side"><div class="mo">21<small>개월</small></div><span class="chip">연 4회</span></div></div><span class="fall">탈락하면 ↓</span></li>
+ <li><div class="rk"><div class="num">4</div><div class="line"></div></div><div class="card"><div><div class="stars">★★☆☆☆</div><div class="name">해군 통번역병</div><div class="why">공고가 열리면 놓치지 않을 영어 경로</div><div class="cond"><span class="chip navy">토익 950 / OPIc IH</span><span class="chip">통역 70 + 번역 30</span><span class="chip">비정기</span></div></div><div class="side"><div class="mo">20<small>개월</small></div><span class="chip">공고 시</span></div></div><span class="fall">기다릴 기한 지나면 ↓</span></li>
+ <li><div class="rk"><div class="num alt">5</div></div><div class="alts"><div class="card"><div class="stars">★☆☆☆☆</div><div class="name">A 공군 일반병</div><div class="why">순수 추첨, 21개월</div></div><div class="card"><div class="stars">★☆☆☆☆</div><div class="name">B 공군 차량운전</div><div class="why">면허 점수제, 21개월</div></div><div class="card"><div class="stars">★☆☆☆☆</div><div class="name">C 육군 수송운용</div><div class="why">1종 보통 수동, 18개월</div></div></div></li>
+</ol>
+
+<div class="comp-label"><b>시안 B · 비교 보드</b><span>복무기간·영어 요구·재지원을 막대와 배지로 나란히</span></div>
+<div class="board">
+ <div class="row"><span></span><span>경로</span><span>복무기간</span><span>영어 요구 수준</span><span>재지원</span><span>모집</span></div>
+ <div class="row top"><span class="n top">1</span><span class="nm">카투사<small>★★★★★ 가장 먼저</small></span><span><div class="bar"><i style="width:60%"></i></div><div class="lbl">18개월</div></span><span><div class="bar en"><i style="width:45%"></i></div><div class="lbl">토익 780 / IM2</div></span><span><span class="pill no">평생 1회</span></span><span><span class="pill m">연 1회 추첨</span></span></div>
+ <div class="row"><span class="n">2</span><span class="nm">육군 영어어학병<small>★★★★☆ 탈락 시 첫 창</small></span><span><div class="bar"><i style="width:60%"></i></div><div class="lbl">18개월</div></span><span><div class="bar en"><i style="width:75%"></i></div><div class="lbl">토익 900 / IH</div></span><span><span class="pill ok">가능</span></span><span><span class="pill m">연 3회</span></span></div>
+ <div class="row"><span class="n">3</span><span class="nm">공군 영어어학병<small>★★★☆☆ 모집 맞으면</small></span><span><div class="bar"><i style="width:70%"></i></div><div class="lbl">21개월</div></span><span><div class="bar en"><i style="width:75%"></i></div><div class="lbl">토익 900 / IH</div></span><span><span class="pill ok">가능</span></span><span><span class="pill m">연 4회</span></span></div>
+ <div class="row"><span class="n">4</span><span class="nm">해군 통번역병<small>★★☆☆☆ 열린 기회</small></span><span><div class="bar"><i style="width:67%"></i></div><div class="lbl">20개월</div></span><span><div class="bar en"><i style="width:95%"></i></div><div class="lbl">토익 950 / IH</div></span><span><span class="pill ok">가능</span></span><span><span class="pill m">비정기</span></span></div>
+ <div class="row"><span class="n alt">5A</span><span class="nm">공군 일반병<small>★☆☆☆☆ 대안</small></span><span><div class="bar"><i style="width:70%"></i></div><div class="lbl">21개월</div></span><span><div class="bar en"><i style="width:0"></i></div><div class="lbl">불필요</div></span><span><span class="pill ok">가능</span></span><span><span class="pill m">연 2회</span></span></div>
+ <div class="row"><span class="n alt">5B</span><span class="nm">공군 차량운전<small>★☆☆☆☆ 대안</small></span><span><div class="bar"><i style="width:70%"></i></div><div class="lbl">21개월</div></span><span><div class="bar en"><i style="width:0"></i></div><div class="lbl">불필요 · 면허</div></span><span><span class="pill ok">가능</span></span><span><span class="pill m">매월</span></span></div>
+ <div class="row"><span class="n alt">5C</span><span class="nm">육군 수송운용<small>★☆☆☆☆ 대안</small></span><span><div class="bar"><i style="width:60%"></i></div><div class="lbl">18개월</div></span><span><div class="bar en"><i style="width:0"></i></div><div class="lbl">불필요 · 면허</div></span><span><span class="pill ok">가능</span></span><span><span class="pill m">매월</span></span></div>
+</div>
+
+<div class="comp-label"><b>시안 C · 갈림길 트리</b><span>합격/탈락 분기를 따라 내려가는 결정 나무</span></div>
+<div class="tree">
+ <div class="node top"><div class="h"><span class="nm">① 카투사 <span class="stars">★★★★★</span></span><span class="mo">18개월</span></div><div class="c">토익 780 / OPIc IM2 · 7월 접수 · 9월 1일 추첨 · 평생 1회</div></div>
+ <div class="branch">
+  <div><div class="arrow win">합격</div><div class="end">'28년 선택월 입영 → 끝</div></div>
+  <div><div class="arrow lose">탈락 → 9월 30일 접수</div><div class="node"><div class="h"><span class="nm">② 육군 영어어학병 <span class="stars">★★★★☆</span></span><span class="mo">18개월</span></div><div class="c">토익 900 / OPIc IH · 번역·통역 시험 · 재지원 가능</div></div>
+   <div class="branch">
+    <div><div class="arrow win">합격</div><div class="end">'28년 1·3월 입영 → 끝</div></div>
+    <div><div class="arrow lose">탈락 → 10월 말</div><div class="node"><div class="h"><span class="nm">③ 공군 영어어학병 <span class="stars">★★★☆☆</span></span><span class="mo">21개월</span></div><div class="c">토익 900 / OPIc IH · 필기 60 + 구술 15</div></div>
+     <div class="arrow lose">탈락 · 공고 뜨면</div><div class="node"><div class="h"><span class="nm">④ 해군 통번역병 <span class="stars">★★☆☆☆</span></span><span class="mo">20개월</span></div><div class="c">토익 950 / OPIc IH · 비정기</div></div>
+     <div class="arrow lose">기한 지나면</div><div class="alts3"><div class="node"><div class="nm">⑤A 공군 일반병</div><div class="c">21개월 · 추첨</div></div><div class="node"><div class="nm">⑤B 공군 차량운전</div><div class="c">21개월 · 면허</div></div><div class="node"><div class="nm">⑤C 육군 수송운용</div><div class="c">18개월 · 면허</div></div></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+</main></body></html>

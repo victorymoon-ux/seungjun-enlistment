@@ -1,0 +1,129 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>연간 지원 달력 시안 3종 — 승준 입대 플래너</title>
+<style>
+:root{--bg:#f6f5f1;--white:#fff;--ink:#182c43;--muted:#586878;--line:#dce3e9;--soft:#edf3f8;--blue:#274c71;--gold:#866329;--warn:#77531f;--warn-bg:#fbf6eb;--green:#285b4b;--green-bg:#edf5f0;--red:#8a3b3b;--red-bg:#fbeeee;--radius:12px;
+--c-katusa:#b8862b;--c-army:#274c71;--c-air:#4f7fa8;--c-navy:#2f6b5e;--c-gen:#8a8f99;--c-drv:#a0a7b0;--c-band:#9b6fa3}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:16px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
+.wrap{max-width:960px;margin:auto;padding:28px 20px 80px}
+h1{font-size:22px;letter-spacing:-.03em;margin:0 0 6px}.lead{color:var(--muted);font-size:14px;margin:0 0 10px}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 6px}.fact{background:#fff;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:13px}.fact b{display:block;font-size:12px;color:var(--muted)}.fact strong{font-size:16px}
+.comp-label{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:44px 0 12px}.comp-label b{font-size:18px;letter-spacing:-.02em}.comp-label span{font-size:13px;color:var(--muted)}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.card h3{margin:0 0 4px;font-size:17px;letter-spacing:-.02em}.card .sub{font-size:13px;color:var(--muted);margin:0 0 14px}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;background:var(--warn-bg);color:var(--warn);border:1px solid #ecdcbd;vertical-align:middle}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);margin-top:12px}.legend i{display:inline-block;width:14px;height:10px;border-radius:3px;vertical-align:-1px;margin-right:4px}
+.legend .o{border:2px dashed #9aa4ae;background:transparent}.legend .d{width:10px;height:10px;border-radius:50%;background:var(--ink)}
+/* ---------- A gantt ---------- */
+.gantt{display:grid;grid-template-columns:118px repeat(12,1fr);gap:0;font-size:12px}
+.gantt .hd{padding:6px 0;text-align:center;color:var(--muted);font-weight:650;border-bottom:1px solid var(--line)}
+.gantt .hd.k{background:var(--warn-bg);color:var(--warn);border-radius:6px 6px 0 0}
+.gantt .lbl{padding:10px 8px 10px 0;font-weight:700;font-size:13px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}.gantt .lbl small{font-weight:500;color:var(--muted);font-size:11px}
+.gantt .cell{border-bottom:1px solid var(--line);border-left:1px solid #eef2f5;min-height:46px;position:relative}
+.gantt .cell.k{background:#fdf9f0}
+.bar{position:absolute;left:3px;right:3px;top:9px;height:11px;border-radius:4px}
+.bar.half-r{left:55%}.bar.half-l{right:55%}
+.bar.in{top:26px;height:0;border-top:3px dotted currentColor;background:none;opacity:.7}
+.dot{position:absolute;top:8px;left:50%;width:12px;height:12px;border-radius:50%;transform:translateX(-50%);border:2px solid #fff;box-shadow:0 0 0 1px var(--ink)}
+.gskip{position:absolute;inset:6px 3px auto 3px;height:14px;border:1.5px dashed var(--red);border-radius:4px;background:repeating-linear-gradient(135deg,transparent 0 4px,#f4dcdc 4px 6px)}
+.note-row{font-size:12.5px;color:var(--muted);margin-top:10px}
+/* ---------- B wall calendar ---------- */
+.months{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.m{border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:#fff;min-height:118px}
+.m.k{border-color:#d7b36b;background:#fdf9f0;box-shadow:inset 0 0 0 1px #f0e2c3}.m.q{background:var(--bg)}
+.m .mh{display:flex;justify-content:space-between;align-items:baseline;font-weight:750;font-size:14px;margin-bottom:6px}.m .mh small{font-size:11px;color:var(--muted);font-weight:600}
+.ev{display:flex;align-items:flex-start;gap:5px;font-size:12px;line-height:1.35;margin:3px 0}.ev i{flex:0 0 8px;width:8px;height:8px;border-radius:2px;margin-top:4px}.ev.in i{border-radius:50%;background:transparent;border:2px solid currentColor;width:7px;height:7px}
+.ev.key{font-weight:750}.ev.skip{color:var(--red);text-decoration:line-through}
+/* ---------- C vertical ---------- */
+.vt{list-style:none;margin:0;padding:0}
+.vt li{display:grid;grid-template-columns:64px 1fr 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line);align-items:start}.vt li:first-child{border-top:0}
+.vt .mo{font-weight:750;font-size:15px}.vt .mo small{display:block;font-size:11px;color:var(--muted);font-weight:600}
+.vt li.k{background:#fdf9f0;margin:0 -18px;padding-left:18px;padding-right:18px;border-radius:0}
+.chips{display:flex;flex-wrap:wrap;gap:4px}.chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:650;padding:3px 8px;border-radius:999px;border:1px solid var(--line);background:#fff;white-space:nowrap}.chip i{width:8px;height:8px;border-radius:2px;display:inline-block}
+.chip.in i{border-radius:50%;background:transparent;border:2px solid currentColor;width:6px;height:6px}
+.chip.no{background:var(--red-bg);color:var(--red);border-color:#edd3d3;text-decoration:line-through}
+.todo{font-size:13px;color:#2b3b4d}.todo b{display:block;font-size:11.5px;color:var(--blue);margin-bottom:2px}
+.vt .q{opacity:.75}
+@media(max-width:600px){.facts{grid-template-columns:1fr 1fr}.gwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -18px;padding:0 18px}.gantt{min-width:640px}.months{grid-template-columns:1fr 1fr}.vt li{grid-template-columns:52px 1fr}.vt .todo{grid-column:2}.card{padding:14px}.vt li.k{margin:0 -14px;padding-left:14px;padding-right:14px}}
+</style></head><body><main class="wrap">
+<h1>연간 지원 달력 시안 3종</h1>
+<p class="lead">2027년 접수 → 2028년 입영 목표 기준. 날짜는 2027년 입영분 공고(2026년 발표)의 운영 패턴이며, 2028년 입영 공고는 미발표라 전부 <span class="tag">예상</span>으로 표시합니다.</p>
+<div class="facts">
+ <div class="fact"><b>카투사</b><strong>연 1회</strong> 7월 접수 · 9월 1일 추첨 · 다음 해 입영(월 선택)</div>
+ <div class="fact"><b>육군 영어어학병</b><strong>연 3회</strong> 1월말 · 6월말 · 9월말 접수</div>
+ <div class="fact"><b>공군 영어어학병</b><strong>연 4회</strong> 2월말 · 3월말 · 6월말 · 10월말 접수</div>
+ <div class="fact"><b>해군 통번역병</b><strong>비정기</strong> 공고 뜰 때만 1~3명</div>
+</div>
+<p class="lead" style="margin-top:6px">참고: 공군 일반병은 8~10월에 다음 해 입영분을 미리 모집(연 2회). 운전병(육군 기술행정병)은 매월 접수. 군악 실용음악은 격월 접수.</p>
+
+<!-- ============ A ============ -->
+<div class="comp-label"><b>시안 A · 12개월 띠 달력(간트형)</b><span>경로별로 접수 창·발표·입영을 한 줄에</span></div>
+<section class="card"><h3>2027년 지원 창 한눈에 <span class="tag">예상</span></h3><p class="sub">막대 = 접수 기간, 점 = 발표, 점선 = 그 회차 입영 달(다음 해면 →표시). 7월은 카투사 달이라 강조.</p>
+<div class="gwrap"><div class="gantt">
+ <div class="hd"></div><div class="hd">1</div><div class="hd">2</div><div class="hd">3</div><div class="hd">4</div><div class="hd">5</div><div class="hd">6</div><div class="hd k">7 카투사</div><div class="hd">8</div><div class="hd">9</div><div class="hd">10</div><div class="hd">11</div><div class="hd">12</div>
+ <!-- 카투사 -->
+ <div class="lbl" style="color:var(--c-katusa)">★★★★★ 카투사<small>연 1회 · 평생 1회</small></div>
+ <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+ <div class="cell k"><span class="bar" style="background:var(--c-katusa)"></span></div><div class="cell k"></div><div class="cell k"><span class="dot" style="background:var(--c-katusa)"></span></div><div class="cell"></div><div class="cell"></div><div class="cell" style="font-size:10.5px;color:var(--muted);padding:28px 2px 0 2px">입영 → 2028 선택월</div>
+ <!-- 육군 어학병 -->
+ <div class="lbl" style="color:var(--c-army)">★★★★☆ 육군 어학병<small>연 3회</small></div>
+ <div class="cell"><span class="bar half-r" style="background:var(--c-army)"></span></div><div class="cell"><span class="bar half-l" style="background:var(--c-army)"></span></div><div class="cell"><span class="dot" style="background:var(--c-army)"></span></div><div class="cell"></div><div class="cell"><span class="bar in" style="color:var(--c-army)"></span></div><div class="cell"><span class="gskip" title="카투사 접수와 겹쳐 건너뜀"></span></div>
+ <div class="cell k"><span class="gskip"></span><span class="bar in" style="color:var(--c-army)"></span></div><div class="cell k"></div><div class="cell k"><span class="bar half-r" style="background:var(--c-army)"></span></div><div class="cell"><span class="bar half-l" style="background:var(--c-army)"></span><span class="bar in" style="color:var(--c-army)"></span></div><div class="cell"><span class="dot" style="background:var(--c-army)"></span></div><div class="cell"><span class="bar in" style="color:var(--c-army)"></span></div>
+ <!-- 공군 어학병 -->
+ <div class="lbl" style="color:var(--c-air)">★★★☆☆ 공군 어학병<small>연 4회</small></div>
+ <div class="cell"></div><div class="cell"><span class="bar half-r" style="background:var(--c-air)"></span></div><div class="cell"><span class="bar" style="background:var(--c-air)"></span></div><div class="cell"><span class="bar half-l" style="background:var(--c-air)"></span></div><div class="cell"></div><div class="cell"><span class="bar half-r" style="background:var(--c-air)"></span><span class="bar in" style="color:var(--c-air)"></span></div>
+ <div class="cell k"><span class="bar half-l" style="background:var(--c-air)"></span></div><div class="cell k"><span class="bar in" style="color:var(--c-air)"></span></div><div class="cell k"></div><div class="cell"><span class="bar half-r" style="background:var(--c-air)"></span><span class="bar in" style="color:var(--c-air)"></span></div><div class="cell"><span class="bar half-l" style="background:var(--c-air)"></span></div><div class="cell"></div>
+ <!-- 해군 통번역병 -->
+ <div class="lbl" style="color:var(--c-navy)">★★☆☆☆ 해군 통번역병<small>비정기</small></div>
+ <div class="cell" style="grid-column:span 12;display:flex;align-items:center;font-size:12px;color:var(--muted);padding-left:8px">정해진 달 없음 · 공고가 뜨면 그 회차에 지원(최근 사례: 2025년 4월 입영 회차)</div>
+ <!-- 공군 일반병 -->
+ <div class="lbl" style="color:var(--c-gen)">★☆☆☆☆ 공군 일반병<small>연 2회 · 다음 해 입영</small></div>
+ <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+ <div class="cell k"></div><div class="cell k"><span class="bar half-r" style="background:var(--c-gen)"></span></div><div class="cell k"><span class="bar half-l" style="background:var(--c-gen)"></span></div><div class="cell"><span class="bar half-l" style="background:var(--c-gen)"></span></div><div class="cell"></div><div class="cell"></div>
+ <!-- 운전병 -->
+ <div class="lbl" style="color:var(--c-drv)">★☆☆☆☆ 운전병<small>매월 접수 · 3개월 뒤 입영</small></div>
+ <div class="cell" style="grid-column:span 12;position:relative"><span class="bar" style="background:var(--c-drv);left:3px;right:3px;opacity:.55"></span></div>
+</div></div>
+<div class="legend"><span><i style="background:var(--ink)"></i>접수 기간</span><span><i class="d"></i>발표</span><span><i class="o"></i>입영 달(점선)</span><span><i style="border:1.5px dashed var(--red);background:#f8e8e8"></i>카투사와 겹쳐 건너뜀</span></div>
+<p class="note-row">카투사 접수(7월) 직전의 6월 말~7월 초 육군·공군 어학병 회차는 "지원 중" 상태가 되어 카투사를 막으므로 건너뜁니다.</p>
+</section>
+
+<!-- ============ B ============ -->
+<div class="comp-label"><b>시안 B · 벽걸이 달력(12칸)</b><span>달마다 무엇이 열리는지 칩으로</span></div>
+<section class="card"><h3>2027년 월별 지원 달력 <span class="tag">예상</span></h3><p class="sub">■ 접수 · ○ 입영. 카투사 달은 금색 테두리, 회색 칸은 준이가 움직일 일이 없는 달.</p>
+<div class="months">
+ <div class="m"><div class="mh">1월<small>준비</small></div><div class="ev" style="color:var(--c-army)"><i style="background:var(--c-army)"></i>육군 어학병 접수(1.26~2.1)</div><div class="ev" style="color:var(--muted)"><i style="background:#ccd3da"></i>운전병 매월 접수</div></div>
+ <div class="m"><div class="mh">2월</div><div class="ev" style="color:var(--c-army)"><i style="background:var(--c-army)"></i>육군 어학병 접수 마감(2.1)</div><div class="ev" style="color:var(--c-air)"><i style="background:var(--c-air)"></i>공군 어학병 접수(2.26~3.5)</div></div>
+ <div class="m"><div class="mh">3월</div><div class="ev" style="color:var(--c-army)"><i style="background:var(--c-army)"></i>육군 어학병 최종 발표(3.25)</div><div class="ev" style="color:var(--c-air)"><i style="background:var(--c-air)"></i>공군 어학병 접수(3.31~4.6)</div></div>
+ <div class="m"><div class="mh">4월</div><div class="ev" style="color:var(--c-air)"><i style="background:var(--c-air)"></i>공군 어학병 접수 마감(4.6)</div></div>
+ <div class="m"><div class="mh">5월</div><div class="ev in" style="color:var(--c-army)"><i></i>육군 어학병 입영(1월 접수분)</div></div>
+ <div class="m"><div class="mh">6월<small>영어 점수 마감선</small></div><div class="ev in" style="color:var(--c-air)"><i></i>공군 어학병 입영(2월 접수분)</div><div class="ev skip"><i style="background:var(--red)"></i>6.29~ 육군 어학병 접수 → 건너뜀</div><div class="ev skip"><i style="background:var(--red)"></i>6.30~ 공군 어학병 접수 → 건너뜀</div></div>
+ <div class="m k"><div class="mh">7월<small>카투사</small></div><div class="ev key" style="color:var(--c-katusa)"><i style="background:var(--c-katusa)"></i>★ 카투사 접수(7.9~7.15)</div><div class="ev in" style="color:var(--c-army)"><i></i>육군 어학병 입영(1월 접수분)</div></div>
+ <div class="m k"><div class="mh">8월<small>대기</small></div><div class="ev" style="color:var(--c-katusa)"><i style="background:var(--c-katusa)"></i>카투사 추첨 대기 · 통번역 실기 준비</div><div class="ev" style="color:var(--c-gen)"><i style="background:var(--c-gen)"></i>공군 일반병 1차 접수(8~9월)</div><div class="ev in" style="color:var(--c-air)"><i></i>공군 어학병 입영(3월 접수분)</div></div>
+ <div class="m k"><div class="mh">9월<small>갈림길</small></div><div class="ev key" style="color:var(--c-katusa)"><i style="background:var(--c-katusa)"></i>★ 카투사 추첨(9.1)</div><div class="ev" style="color:var(--c-army)"><i style="background:var(--c-army)"></i>탈락 시 육군 어학병 접수(9.30~10.7)</div></div>
+ <div class="m"><div class="mh">10월</div><div class="ev" style="color:var(--c-army)"><i style="background:var(--c-army)"></i>육군 어학병 접수 마감(10.7)</div><div class="ev" style="color:var(--c-gen)"><i style="background:var(--c-gen)"></i>공군 일반병 2차 접수(10월 초)</div><div class="ev" style="color:var(--c-air)"><i style="background:var(--c-air)"></i>공군 어학병 접수(10.28~11.3)</div><div class="ev in" style="color:var(--c-army)"><i></i>육군 어학병 입영(6월 접수분)</div></div>
+ <div class="m"><div class="mh">11월</div><div class="ev" style="color:var(--c-army)"><i style="background:var(--c-army)"></i>육군 어학병 최종 발표(11.26)</div><div class="ev" style="color:var(--c-air)"><i style="background:var(--c-air)"></i>공군 어학병 접수 마감(11.3)</div></div>
+ <div class="m"><div class="mh">12월</div><div class="ev in" style="color:var(--c-army)"><i></i>육군 어학병 입영(6월 접수분)</div><div class="ev" style="color:var(--muted)"><i style="background:#ccd3da"></i>휴학 여부 결정</div></div>
+</div>
+<div class="legend"><span><i style="background:var(--c-katusa)"></i>카투사</span><span><i style="background:var(--c-army)"></i>육군 어학병</span><span><i style="background:var(--c-air)"></i>공군 어학병</span><span><i style="background:var(--c-gen)"></i>공군 일반병</span><span><i class="o"></i>입영 달</span></div>
+<p class="note-row">해군 통번역병은 정해진 달이 없어 칸에 넣지 않고, 공고가 뜨면 그 달에 추가합니다.</p>
+</section>
+
+<!-- ============ C ============ -->
+<div class="comp-label"><b>시안 C · 세로 달력 + 준이 할 일</b><span>달 → 열리는 모집 → 준이가 할 행동</span></div>
+<section class="card"><h3>2027년 월별 행동 달력 <span class="tag">예상</span></h3><p class="sub">왼쪽은 달, 가운데는 그 달에 열리는 모집, 오른쪽은 준이가 실제로 할 일. 카투사 구간은 금색 배경.</p>
+<ul class="vt">
+ <li><div class="mo">1월<small>준비</small></div><div class="chips"><span class="chip" style="color:var(--c-army)"><i style="background:var(--c-army)"></i>육군 어학병 접수</span></div><div class="todo"><b>할 일</b>토익·OPIc 1차 응시. 이번 회차는 지원하지 않음(카투사 전).</div></li>
+ <li><div class="mo">2월</div><div class="chips"><span class="chip" style="color:var(--c-air)"><i style="background:var(--c-air)"></i>공군 어학병 접수</span></div><div class="todo"><b>할 일</b>점수 미달이면 재응시. 병역판정검사 완료 확인.</div></li>
+ <li><div class="mo">3월</div><div class="chips"><span class="chip" style="color:var(--c-air)"><i style="background:var(--c-air)"></i>공군 어학병 접수</span></div><div class="todo"><b>할 일</b>어학성적 사전등록(정부24). 컴활 실기 마무리.</div></li>
+ <li class="q"><div class="mo">4월</div><div class="chips"><span class="chip" style="color:var(--muted)"><i style="background:#ccd3da"></i>운전병 매월</span></div><div class="todo"><b>할 일</b>목표 점수 확정. 2마일 달리기 기록 측정.</div></li>
+ <li class="q"><div class="mo">5월</div><div class="chips"><span class="chip in" style="color:var(--c-army)"><i></i>육군 어학병 입영</span></div><div class="todo"><b>할 일</b>통번역 연습 시작(번역·통역 기출).</div></li>
+ <li><div class="mo">6월<small>마감선</small></div><div class="chips"><span class="chip no"><i style="background:var(--red)"></i>6.29~ 육군 어학병</span><span class="chip no"><i style="background:var(--red)"></i>6.30~ 공군 어학병</span></div><div class="todo"><b>할 일</b>영어 점수 최종 확보. 이 두 회차는 카투사와 겹치니 건너뜀.</div></li>
+ <li class="k"><div class="mo">7월<small>카투사</small></div><div class="chips"><span class="chip" style="color:var(--c-katusa);font-weight:800"><i style="background:var(--c-katusa)"></i>★ 카투사 접수 7.9~15</span></div><div class="todo"><b>할 일</b>입영희망월은 공개 경쟁률 보고 덜 몰리는 달 선택.</div></li>
+ <li class="k"><div class="mo">8월<small>대기</small></div><div class="chips"><span class="chip" style="color:var(--c-gen)"><i style="background:var(--c-gen)"></i>공군 일반병 1차</span></div><div class="todo"><b>할 일</b>추첨 대기. 통번역 실기 준비 계속. 일반병은 넣지 않음.</div></li>
+ <li class="k"><div class="mo">9월<small>갈림길</small></div><div class="chips"><span class="chip" style="color:var(--c-katusa);font-weight:800"><i style="background:var(--c-katusa)"></i>★ 추첨 9.1</span><span class="chip" style="color:var(--c-army)"><i style="background:var(--c-army)"></i>육군 어학병 접수 9.30~</span></div><div class="todo"><b>할 일</b>합격 → 2028 입영 준비. 탈락 → 9월 30일 육군 어학병 접수.</div></li>
+ <li><div class="mo">10월</div><div class="chips"><span class="chip" style="color:var(--c-gen)"><i style="background:var(--c-gen)"></i>공군 일반병 2차</span><span class="chip" style="color:var(--c-air)"><i style="background:var(--c-air)"></i>공군 어학병 접수 10.28~</span></div><div class="todo"><b>할 일</b>육군 어학병 1차(2배수 추첨) 결과 확인. 떨어지면 공군 어학병 10월 말 회차.</div></li>
+ <li><div class="mo">11월</div><div class="chips"><span class="chip" style="color:var(--c-army)"><i style="background:var(--c-army)"></i>육군 어학병 최종 11.26</span></div><div class="todo"><b>할 일</b>합격 → 2028년 1·3월 입영. 탈락 → 공군 11월 말 회차 또는 육군 다음 회차(2028년 1월).</div></li>
+ <li><div class="mo">12월</div><div class="chips"><span class="chip in" style="color:var(--c-army)"><i></i>육군 어학병 입영(6월분)</span></div><div class="todo"><b>할 일</b>입영 달이 2028년 1~3월이면 2학기 마치고 휴학.</div></li>
+</ul>
+<p class="note-row">해군 통번역병은 공고가 뜨는 달에 끼워 넣습니다. 운전병·군악은 참고 경로라 회색으로만 표시했습니다.</p>
+</section>
+</main></body></html>

@@ -1,0 +1,131 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>상세 카드 시각화 시안 3종 — 승준 입대 플래너</title>
+<style>
+:root{--bg:#f6f5f1;--white:#fff;--ink:#182c43;--muted:#586878;--line:#dce3e9;--soft:#edf3f8;--blue:#274c71;--gold:#d0342c;--warn:#77531f;--warn-bg:#fbf6eb;--green:#285b4b;--green-bg:#edf5f0;--red:#8a3b3b;--red-bg:#fbeeee;--radius:12px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:16px;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere}
+.wrap{max-width:860px;margin:auto;padding:28px 20px 80px}
+h1{font-size:22px;letter-spacing:-.03em;margin:0 0 6px}.lead{color:var(--muted);font-size:14px;margin:0 0 28px}
+.comp-label{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:44px 0 12px}.comp-label b{font-size:18px;letter-spacing:-.02em}.comp-label span{font-size:13px;color:var(--muted)}
+.path{background:var(--white);border:1px solid #efb3ae;border-radius:var(--radius);overflow:hidden;box-shadow:0 0 0 2px #fbe3e1}
+.summary{display:flex;justify-content:space-between;gap:12px;padding:18px 18px;background:#fff7f6;border-left:5px solid #d0342c}
+.stars{color:var(--gold);letter-spacing:.5px;font-size:14px}.rank{font-size:13px;font-weight:650;display:flex;gap:10px;align-items:center}
+.title{font-size:20px;font-weight:750;letter-spacing:-.03em;margin-top:4px}.desc{font-size:13px;color:var(--muted);margin-top:3px}
+.side{text-align:right;flex:0 0 auto}.dur{font-size:26px;font-weight:750;line-height:1}.dur small{font-size:12px;font-weight:500;margin-left:2px}.once{display:block;font-size:12px;color:var(--gold);margin-top:6px;font-weight:650}
+.body{padding:16px 18px 18px;border-top:1px solid var(--line)}
+.branch{font-size:12px;font-weight:650;color:var(--blue);margin:0 0 14px}
+.src{margin-top:16px;font-size:13px}.src a{color:var(--blue);text-underline-offset:4px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:650;padding:4px 9px;border-radius:999px;border:1px solid var(--line);background:#fff;white-space:nowrap}
+.chip.ok{background:var(--green-bg);color:var(--green);border-color:#cfe2d7}.chip.no{background:var(--red-bg);color:var(--red);border-color:#edd3d3}.chip.warn{background:var(--warn-bg);color:var(--warn);border-color:#ecdcbd}.chip.navy{background:var(--soft);color:var(--blue);border-color:#c9d8e6}
+.note{font-size:12.5px;color:var(--muted);margin-top:6px}
+/* ---- A: tiles ---- */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tile{background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 11px;min-height:86px}
+.tile .k{font-size:11.5px;color:var(--muted);font-weight:650;letter-spacing:.01em}.tile .v{font-size:15px;font-weight:750;margin-top:4px;line-height:1.35}.tile .v.small{font-size:13.5px;font-weight:650}
+.tile .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.tile .chip{font-size:11.5px;padding:2px 7px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.box{border-radius:9px;padding:12px 13px;font-size:14px}.box b{display:block;font-size:12px;margin-bottom:4px}
+.box.good{background:var(--green-bg);color:#1f4a3b}.box.good b{color:var(--green)}.box.care{background:var(--warn-bg);color:#5c4218}.box.care b{color:var(--warn)}
+.row{display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:start;padding:11px 0;border-top:1px solid var(--line);font-size:14px}.row:first-of-type{border-top:0}
+.row .k{font-size:12.5px;color:var(--muted);font-weight:650;padding-top:3px}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:4px}.flow .arrow{color:var(--muted);font-size:13px}
+.flow .chip{font-size:13px;padding:6px 11px}
+.when{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.when .step{display:inline-flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 10px;min-width:84px}.when .step small{font-size:11px;color:var(--muted)}.when .step b{font-size:13.5px}
+.when .step.dim{border-style:dashed;color:var(--muted)}
+/* ---- B: checklist ---- */
+.check{list-style:none;margin:0;padding:0}
+.check li{display:grid;grid-template-columns:30px 1fr;gap:10px;padding:12px 0;border-top:1px solid var(--line);align-items:start}.check li:first-child{border-top:0}
+.ic{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:800;margin-top:2px}
+.ic.ok{background:var(--green-bg);color:var(--green)}.ic.no{background:var(--red-bg);color:var(--red)}.ic.warn{background:var(--warn-bg);color:var(--warn)}.ic.info{background:var(--soft);color:var(--blue)}
+.check .h{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:14px;font-weight:700}.check .h .chip{margin-left:2px}
+.check p{margin:3px 0 0;font-size:14px;color:#2b3b4d}
+.meter{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;max-width:240px;margin-top:6px}.meter span{height:8px;border-radius:3px;background:#e6ebf0}.meter span.on{background:#c9a35a}.meter span.on.hi{background:#b07a3a}
+.meter-l{display:flex;justify-content:space-between;max-width:240px;font-size:11px;color:var(--muted)}
+.nextbox{background:var(--soft);border-radius:8px;padding:12px 14px;margin-top:14px;font-size:14px}.nextbox b{font-size:12px;color:var(--blue);display:block;margin-bottom:6px}
+/* ---- C: stepper ---- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:s;position:relative;margin-top:4px}
+.step4{position:relative;padding:0 10px 0 0}
+.step4 .dot{width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:750}
+.step4::after{content:"";position:absolute;top:14px;left:28px;right:4px;height:2px;background:var(--line)}.step4:last-child::after{display:none}
+.step4 .t{font-size:13px;font-weight:750;margin-top:8px}.step4 .d{font-size:13px;color:#2b3b4d;margin-top:3px;line-height:1.5}
+.step4 .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.step4 .chip{font-size:11.5px;padding:2px 7px}
+.branches{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.br{border-radius:9px;padding:11px 13px;font-size:13.5px;border:1px solid var(--line)}.br b{display:block;font-size:12px;margin-bottom:3px}
+.br.win{background:var(--green-bg);border-color:#cfe2d7}.br.win b{color:var(--green)}.br.lose{background:var(--warn-bg);border-color:#ecdcbd}.br.lose b{color:var(--warn)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.fact{background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:13.5px}.fact b{display:block;font-size:12px;color:var(--muted);margin-bottom:2px}
+@media(max-width:560px){.tiles{grid-template-columns:1fr 1fr}.two,.branches,.facts{grid-template-columns:1fr}.row{grid-template-columns:1fr;gap:3px}.steps{grid-template-columns:1fr;gap:14px}.step4::after{display:none}.step4{padding:0;display:grid;grid-template-columns:28px 1fr;column-gap:10px}.step4 .dot{grid-row:span 3}.step4 .t{margin-top:4px}.summary{padding:16px 14px}.body{padding:14px 14px 16px}}
+
+/* ---- D: 3 summary tiles ---- */
+.d3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.d3 .col{border:1px solid var(--line);border-radius:10px;padding:14px}
+.d3 .ico{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:16px;font-weight:800;margin-bottom:8px}
+.d3 .ico.a{background:var(--soft);color:var(--blue)}.d3 .ico.b{background:var(--green-bg);color:var(--green)}.d3 .ico.c{background:var(--warn-bg);color:var(--warn)}
+.d3 .t{font-size:12px;color:var(--muted);font-weight:700}.d3 .big{font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.3;margin:2px 0 6px}.d3 .big.red{color:var(--red)}
+.d3 p{margin:0;font-size:13px;line-height:1.5;color:#2b3b4d}.d3 .chips{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0 6px}
+/* ---- E: Q&A ---- */
+.qa{list-style:none;margin:0;padding:0}
+.qa li{display:grid;grid-template-columns:1fr auto;gap:8px 12px;padding:12px 0;border-top:1px solid var(--line);align-items:center}.qa li:first-child{border-top:0}
+.qa .q{font-size:14.5px;font-weight:750}.qa .q small{display:block;font-weight:500;font-size:13px;color:#2b3b4d;margin-top:3px}
+.qa .a{justify-self:end;text-align:right}
+.ans{display:inline-block;font-size:13px;font-weight:800;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.ans.yes{background:var(--green-bg);color:var(--green)}.ans.no{background:var(--red-bg);color:var(--red)}.ans.mid{background:var(--warn-bg);color:var(--warn)}.ans.info{background:var(--soft);color:var(--blue)}
+@media(max-width:560px){.d3{grid-template-columns:1fr}.qa li{grid-template-columns:1fr}.qa .a{justify-self:start;text-align:left}}
+</style></head><body><main class="wrap">
+<h1>카드 안쪽(펼쳤을 때) 시각화 시안 5종</h1>
+<p class="lead">카드를 눌러 펼쳤을 때 나오는 안쪽(조건·선발·좋은 점·유의점·모집·재지원·동시지원·다음 선택)을 다섯 방식으로 그렸습니다. 카투사 카드 하나로 비교하고, 고르면 7개 카드 전부에 적용합니다. 색·서체·헤더는 승인된 디자인 그대로입니다.</p>
+
+<!-- ===================== A ===================== -->
+<div class="comp-label"><b>시안 A · 지표 타일 + 좋은점/유의점</b><span>숫자·조건을 타일로 먼저, 설명은 두 상자로</span></div>
+<section class="path"><div class="summary"><div><div class="rank"><span class="stars">⭐⭐⭐⭐⭐</span>1순위</div><div class="title">카투사</div><div class="desc"><span style="display:inline-block;border:1.5px solid #d0342c;color:#d0342c;border-radius:7px;padding:2px 8px;font-size:12px;font-weight:750;margin:4px 0"><b style="background:#d0342c;color:#fff;border-radius:4px;padding:1px 5px;font-size:10.5px;margin-right:4px">소속</b>육군 · 근무: 주한미군(미8군) 부대</span><br>영어를 쓰는 환경, 가장 먼저 도전</div></div><div class="side"><div class="dur">18<small>개월</small></div><span class="once">지원 1회</span></div></div>
+<div class="body"><p class="branch">육군 · 주한미군 배속</p>
+<div class="tiles">
+ <div class="tile"><div class="k">영어 조건 (하나만)</div><div class="chips"><span class="chip navy">TOEIC 780</span><span class="chip navy">TS 140</span><span class="chip navy">OPIc IM2</span></div></div>
+ <div class="tile"><div class="k">선발 방식</div><div class="v">전산 추첨</div><div class="note">점수 높아도 확률 같음</div></div>
+ <div class="tile"><div class="k">탈락 후 재지원</div><div class="v" style="color:var(--red)">불가</div><div class="note">원칙적으로 1회</div></div>
+ <div class="tile"><div class="k">동시지원</div><div class="chips"><span class="chip no">어학병 ✕</span><span class="chip no">통번역병 ✕</span><span class="chip warn">기술병 △</span></div></div>
+</div>
+<div class="two">
+ <div class="box good"><b>✓ 준이에게 좋은 점</b>미군과 근무하면서 영어를 사용할 기회. 18개월 복무로 학업 복귀가 상대적으로 빠름.</div>
+ <div class="box care"><b>! 신체 부담·유의점</b>보직에 따라 훈련과 신체 부담이 달라짐. 카투사 합격이 사무직 배치를 뜻하지는 않음.</div>
+</div>
+<div class="row"><div class="k">모집 시기</div><div class="when"><span class="step"><small>2027년 입영 사례</small><b>2026.7 접수</b></span><span class="arrow">→</span><span class="step"><small>같은 해</small><b>9월 선발</b></span><span class="step dim"><small>2028년 입영</small><b>미발표</b></span></div></div>
+<div class="row"><div class="k">조건 세부</div><div style="font-size:13.5px">인정 성적 중 하나. 기존 카투사 지원 이력과 현역병 지원 요건 확인. 기술병은 해당 카투사 공고가 지정한 회차에만 예외가 있을 수 있음.</div></div>
+<div class="row"><div class="k">다음 선택</div><div class="flow"><span class="chip warn">탈락</span><span class="arrow">→</span><span class="chip navy">육군 영어어학병 우선</span><span class="arrow">→</span><span class="chip">공고 없으면 공군·해군 어학</span></div></div>
+<div class="src"><a href="#">병무청 공식 안내 확인 ↗</a></div></div></section>
+
+<!-- ===================== B ===================== -->
+<div class="comp-label"><b>시안 B · 체크리스트 신호등</b><span>항목마다 가능/불가/주의 아이콘, 부담은 게이지로</span></div>
+<section class="path"><div class="summary"><div><div class="rank"><span class="stars">⭐⭐⭐⭐⭐</span>1순위</div><div class="title">카투사</div><div class="desc"><span style="display:inline-block;border:1.5px solid #d0342c;color:#d0342c;border-radius:7px;padding:2px 8px;font-size:12px;font-weight:750;margin:4px 0"><b style="background:#d0342c;color:#fff;border-radius:4px;padding:1px 5px;font-size:10.5px;margin-right:4px">소속</b>육군 · 근무: 주한미군(미8군) 부대</span><br>영어를 쓰는 환경, 가장 먼저 도전</div></div><div class="side"><div class="dur">18<small>개월</small></div><span class="once">지원 1회</span></div></div>
+<div class="body"><p class="branch">육군 · 주한미군 배속</p>
+<ul class="check">
+ <li><span class="ic ok">✓</span><div><div class="h">영어 조건 <span class="chip navy">TOEIC 780</span><span class="chip navy">TS 140</span><span class="chip navy">OPIc IM2</span><span class="chip">중 하나</span></div><p>기존 카투사 지원 이력과 현역병 지원 요건 확인.</p></div></li>
+ <li><span class="ic info">⚄</span><div><div class="h">선발은 전산 추첨</div><p>지원자격 충족 후 추첨. 영어 고득점 자체가 합격을 보장하지 않음.</p></div></li>
+ <li><span class="ic ok">+</span><div><div class="h">준이에게 좋은 점</div><p>미군과 근무하면서 영어를 사용할 기회. 18개월 복무로 학업 복귀가 상대적으로 빠름.</p></div></li>
+ <li><span class="ic warn">!</span><div><div class="h">신체 부담 <span class="chip warn">보직 따라 다름</span></div><div class="meter"><span class="on"></span><span class="on"></span><span></span></div><div class="meter-l"><span>낮음</span><span>보통</span><span>높음</span></div><p>카투사 합격이 사무직 배치를 뜻하지는 않음.</p></div></li>
+ <li><span class="ic info">▦</span><div><div class="h">모집 시기 <span class="chip">2027년 입영 사례: 2026.7 접수 · 9월 선발</span><span class="chip warn">2028년 미발표</span></div></div></li>
+ <li><span class="ic no">✕</span><div><div class="h">탈락 후 재지원 <span class="chip no">불가 · 1회</span></div><p>추첨 탈락 후 재지원 불가. 원칙적으로 지원은 1회.</p></div></li>
+ <li><span class="ic no">✕</span><div><div class="h">동시지원 <span class="chip no">어학병·통번역병 불가</span><span class="chip warn">기술병 지정 회차만</span></div><p>기술병은 해당 카투사 공고가 지정한 회차에만 예외가 있을 수 있음.</p></div></li>
+</ul>
+<div class="nextbox"><b>다음 선택</b><div class="flow"><span class="chip warn">탈락</span><span class="arrow">→</span><span class="chip navy">육군 영어어학병 우선</span><span class="arrow">→</span><span class="chip">공고 없으면 공군·해군 어학</span></div></div>
+<div class="src"><a href="#">병무청 공식 안내 확인 ↗</a></div></div></section>
+
+<!-- ===================== C ===================== -->
+<div class="comp-label"><b>시안 C · 4단계 흐름 + 결과 분기</b><span>조건 → 지원 → 결과 → 복무 순서로 읽기</span></div>
+<section class="path"><div class="summary"><div><div class="rank"><span class="stars">⭐⭐⭐⭐⭐</span>1순위</div><div class="title">카투사</div><div class="desc"><span style="display:inline-block;border:1.5px solid #d0342c;color:#d0342c;border-radius:7px;padding:2px 8px;font-size:12px;font-weight:750;margin:4px 0"><b style="background:#d0342c;color:#fff;border-radius:4px;padding:1px 5px;font-size:10.5px;margin-right:4px">소속</b>육군 · 근무: 주한미군(미8군) 부대</span><br>영어를 쓰는 환경, 가장 먼저 도전</div></div><div class="side"><div class="dur">18<small>개월</small></div><span class="once">지원 1회</span></div></div>
+<div class="body"><p class="branch">육군 · 주한미군 배속</p>
+<div class="steps">
+ <div class="step4"><div class="dot">1</div><div class="t">조건 갖추기</div><div class="chips"><span class="chip navy">TOEIC 780</span><span class="chip navy">TS 140</span><span class="chip navy">OPIc IM2</span></div><div class="d">인정 성적 중 하나. 기존 지원 이력·현역병 요건 확인.</div></div>
+ <div class="step4"><div class="dot">2</div><div class="t">지원 · 추첨</div><div class="d">2027년 입영 사례는 2026.7 접수 → 9월 선발. 2028년은 미발표.</div><div class="chips"><span class="chip no">어학병과 동시 ✕</span><span class="chip warn">기술병 지정회차 △</span></div></div>
+ <div class="step4"><div class="dot">3</div><div class="t">결과</div><div class="d">전산 추첨이라 점수가 높아도 확률은 같음.</div><div class="chips"><span class="chip no">재지원 불가 · 1회</span></div></div>
+ <div class="step4"><div class="dot">4</div><div class="t">복무 18개월</div><div class="d">미군 부대 배속. 보직에 따라 훈련·신체 부담 달라짐.</div></div>
+</div>
+<div class="branches">
+ <div class="br win"><b>합격하면</b>2028년 선택한 달 입영. 미군과 근무하며 영어 사용, 학업 복귀가 빠름.</div>
+ <div class="br lose"><b>탈락하면</b>육군 영어어학병 우선 검토. 공고가 없으면 접수 중인 공군·해군 어학 경로.</div>
+</div>
+<div class="facts">
+ <div class="fact"><b>준이에게 좋은 점</b>미군과 근무하면서 영어를 사용할 기회. 18개월 복무로 학업 복귀가 상대적으로 빠름.</div>
+ <div class="fact"><b>신체 부담·유의점</b>보직에 따라 훈련과 신체 부담이 달라짐. 카투사 합격이 사무직 배치를 뜻하지는 않음.</div>
+</div>
+<div class="src"><a href="#">병무청 공식 안내 확인 ↗</a></div></div></section>
+<div class="comp-label"><b>시안 D · 요약 타일 3개</b><span>지원 / 복무 / 떨어지면, 세 질문만 크게</span></div><section class="path"><div class="summary"><div><div class="rank"><span class="stars">⭐⭐⭐⭐⭐</span>1순위</div><div class="title">카투사</div><div class="desc"><span style="display:inline-block;border:1.5px solid #d0342c;color:#d0342c;border-radius:7px;padding:2px 8px;font-size:12px;font-weight:750;margin:4px 0"><b style="background:#d0342c;color:#fff;border-radius:4px;padding:1px 5px;font-size:10.5px;margin-right:4px">소속</b>육군 · 근무: 주한미군(미8군) 부대</span><br>영어를 쓰는 환경, 가장 먼저 도전</div></div><div class="side"><div class="dur">18<small>개월</small></div><span class="once">지원 1회</span></div></div><div class="body"><p class="branch">육군 · 주한미군 배속</p><div class="d3"><div class="col"><div class="ico a">①</div><div class="t">지원 조건</div><div class="big">영어 점수 하나만</div><div class="chips"><span class="chip navy">TOEIC 780</span><span class="chip navy">TS 140</span><span class="chip navy">OPIc IM2</span></div><p>점수 넘으면 전산 추첨. 점수 높아도 확률은 같음. 평생 1회.</p></div><div class="col"><div class="ico b">②</div><div class="t">복무</div><div class="big">18개월 · 미군 부대</div><p>영어를 실제로 쓰는 환경, 학업 복귀가 빠름. 보직에 따라 훈련·신체 부담이 달라지고 사무직이 보장되진 않음.</p></div><div class="col"><div class="ico c">③</div><div class="t">떨어지면</div><div class="big red">재지원 불가</div><p>바로 9월 30일 육군 영어어학병 접수로. 어학병·통번역병과 동시지원은 불가, 기술병은 공고가 지정한 회차만 예외.</p></div></div><div class="row" style="margin-top:12px"><div class="k">모집 시기</div><div style="font-size:13.5px">2028년 입영분 미발표. 2027년 입영분은 2026년 7월 접수, 9월 선발.</div></div><div class="src"><a href="#">병무청 공식 안내 확인 ↗</a></div></div></section><div class="comp-label"><b>시안 E · 질문-답 카드</b><span>가족이 궁금한 순서로 묻고, 답은 큰 배지로</span></div><section class="path"><div class="summary"><div><div class="rank"><span class="stars">⭐⭐⭐⭐⭐</span>1순위</div><div class="title">카투사</div><div class="desc"><span style="display:inline-block;border:1.5px solid #d0342c;color:#d0342c;border-radius:7px;padding:2px 8px;font-size:12px;font-weight:750;margin:4px 0"><b style="background:#d0342c;color:#fff;border-radius:4px;padding:1px 5px;font-size:10.5px;margin-right:4px">소속</b>육군 · 근무: 주한미군(미8군) 부대</span><br>영어를 쓰는 환경, 가장 먼저 도전</div></div><div class="side"><div class="dur">18<small>개월</small></div><span class="once">지원 1회</span></div></div><div class="body"><p class="branch">육군 · 주한미군 배속</p><ul class="qa"><li><div class="q">영어 점수 얼마나 필요해?<small>TOEIC 780 / TOEIC Speaking 140 / OPIc IM2 중 하나. 기존 지원 이력·현역 요건 확인.</small></div><div class="a"><span class="ans info">780점이면 됨</span></div></li><li><div class="q">점수 높으면 유리해?<small>지원자격만 넘기면 전산 추첨. 점수가 합격을 보장하지 않음.</small></div><div class="a"><span class="ans mid">아니, 추첨</span></div></li><li><div class="q">몸 힘들어?<small>보직에 따라 훈련·신체 부담이 다름. 사무직 배치가 보장되진 않음.</small></div><div class="a"><span class="ans mid">보직 따라 다름</span></div></li><li><div class="q">뭐가 좋아?<small>미군과 근무하며 영어 사용. 18개월이라 학업 복귀가 빠름.</small></div><div class="a"><span class="ans yes">영어 · 18개월</span></div></li><li><div class="q">언제 지원해?<small>2027년 입영분은 2026년 7월 접수, 9월 선발. 2028년분은 미발표.</small></div><div class="a"><span class="ans info">7월 접수</span></div></li><li><div class="q">떨어지면 다시 넣을 수 있어?<small>추첨 탈락 후 재지원 불가. 평생 1회.</small></div><div class="a"><span class="ans no">불가</span></div></li><li><div class="q">다른 데랑 같이 넣어도 돼?<small>어학병·통번역병과 동시지원 불가. 기술병은 공고가 지정한 회차만 예외.</small></div><div class="a"><span class="ans no">불가</span></div></li><li><div class="q">떨어지면 어디로?<small>육군 영어어학병 우선. 공고 없으면 접수 중인 공군·해군 어학 경로.</small></div><div class="a"><span class="ans info">→ 육군 어학병</span></div></li></ul><div class="src"><a href="#">병무청 공식 안내 확인 ↗</a></div></div></section></main></body></html>
