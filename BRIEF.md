@@ -135,3 +135,4 @@
 - 2026-10-15: 접이식 배지(월별 행동 계획·합격 사례 모음집) 글씨 19→15px, 여백 축소.
 - 2026-10-15: 영어 점수 목표를 '토익 900 / 토스 160 / OPIc IH 중 하나'로 확정(카투사·육군·공군 전부 커버). 해군 통번역병(950/170)은 '점수가 더 나오면 덤'으로 격하. 프로필 상자 목표 점수도 동일하게.
 - 2026-10-15 배포: git init → GitHub public repo victorymoon-ux/seungjun-enlistment 생성·push → GitHub Pages(main, /) 활성화. 공개 주소 https://victorymoon-ux.github.io/seungjun-enlistment/
+- 2026-10-15 모바일 눌림 보정(≤720px): 사다리 여백 46→34px, 번호 원 24px, 카드 제목·칩·소속 태그 축소, '복무 기간 N개월'을 칩 아래 한 줄로 이동, 휴대폰 달력 목록에서 별표 숨김·경로 열 96px·칩 12px. 390px 렌더 확인 후 push.
