@@ -134,3 +134,10 @@
 
 13. 전달 대상 추가 확인
 사용자는 Claude 작업 환경을 '파세요'(Paseo)라고 답했다. Paseo가 이 Mac에 연결되어 있으면 위 폴더를 그대로 읽으면 된다. 다른 호스트라면 압축파일을 그 호스트에 풀어야 하며, 사용자 확인 없이 다른 호스트로 전송하지 않는다. 기존 대화 세션 자체가 자동 변환되었다고 설명하지 말고 인계 요약과 파일을 읽고 이어받는 방식이라고 설명한다.
+
+14. 배포 (2026-10-15 추가)
+- GitHub 저장소: https://github.com/victorymoon-ux/seungjun-enlistment (public, 기본 브랜치 main)
+- 공개 주소(GitHub Pages): https://victorymoon-ux.github.io/seungjun-enlistment/
+- 배포 방식: main에 push하면 Pages가 자동 반영(1~2분). 로컬 미리보기 서버(18765)는 임시용.
+- 백업 파일(index.backup-*.html)·zip·임시 프레임은 .gitignore로 제외.
+- 페이지엔 noindex 메타가 있어 검색엔진 수집은 막혀 있으나, 주소를 아는 사람은 누구나 볼 수 있음(준이 프로필 포함).
