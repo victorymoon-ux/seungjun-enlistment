@@ -137,3 +137,7 @@
 - 2026-10-15 배포: git init → GitHub public repo victorymoon-ux/seungjun-enlistment 생성·push → GitHub Pages(main, /) 활성화. 공개 주소 https://victorymoon-ux.github.io/seungjun-enlistment/
 - 2026-10-15 모바일 눌림 보정(≤720px): 사다리 여백 46→34px, 번호 원 24px, 카드 제목·칩·소속 태그 축소, '복무 기간 N개월'을 칩 아래 한 줄로 이동, 휴대폰 달력 목록에서 별표 숨김·경로 열 96px·칩 12px. 390px 렌더 확인 후 push.
 - 2026-10-15 휴대폰 카드 펼침 보정(≤720px): 정의·근무 13px, 타일을 아이콘 26px + 본문 2열 그리드로 압축(큰 글 15px, 본문 12.5px), 안쪽 여백 축소, 링크 13px. PC는 미디어쿼리 밖이라 변동 없음. 펼친 카투사 카드 높이 약 40% 감소.
+
+## 2026-10-15 — 모바일 달력 PC형 통일 + 문구 정리
+- 모바일(≤1100px)에서 월별 목록(.cal-mobile) 숨기고 PC 간트(.gwrap)를 가로 스크롤로 표시. 경로 이름 열 sticky, "옆으로 밀어서 보세요" 힌트 추가. 390px 렌더 확인.
+- "가족 검토용" 문구 제거(상단 메타·meta description). 리드 문장 "몸은 덜 쓰는 경로" → "영어 전공을 살리는 경로"(임시, 사용자 5안 중 선택 대기).
